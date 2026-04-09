@@ -1,65 +1,54 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Use Case 2: Add Passenger Bogies to Train [cite: 19]
- * Description: Demonstrates how passenger bogies can be managed dynamically
- * using ArrayList operations (CRUD). [cite: 21, 25]
+ * UC3: Track Unique Bogie IDs
+ * This class ensures that duplicate bogie IDs are not added
+ * into the train formation using HashSet. [cite: 17, 20]
  */
-public class UseCase2TrainConsistMgmt {
+public class UseCase3TrackUniqueBogieIDs {
 
-    // Create an ArrayList to hold passenger bogies [cite: 31, 32]
-    private List<String> passengerBogies;
+    private Set<String> bogies;
 
-    public UseCase2TrainConsistMgmt() {
-        this.passengerBogies = new ArrayList<>();
+    public UseCase3TrackUniqueBogieIDs() {
+        // HashSet is used to store only unique values [cite: 34, 53]
+        this.bogies = new HashSet<>();
     }
 
-    // CREATE: add() attaches a new bogie to the train [cite: 34, 35]
-    public void addBogie(String bogie) {
-        passengerBogies.add(bogie);
+    /**
+     * Adds a bogie ID to the set. Duplicates are automatically
+     * ignored by the HashSet implementation. [cite: 43, 57]
+     * @param bogieId The ID to add
+     * @return true if the ID was added, false if it was a duplicate
+     */
+    public boolean addBogie(String bogieId) {
+        return bogies.add(bogieId);
     }
 
-    // DELETE: remove() deletes elements from the list [cite: 49]
-    public void removeBogie(String bogie) {
-        passengerBogies.remove(bogie);
+    public Set<String> getBogies() {
+        return new HashSet<>(bogies);
     }
 
-    // READ: contains() checks whether a given element exists [cite: 50]
-    public boolean checkBogieExists(String bogie) {
-        return passengerBogies.contains(bogie);
-    }
-
-    public List<String> getPassengerBogies() {
-        return passengerBogies;
+    public void displayBogies() {
+        System.out.println("UC3 Track Unique Bogie IDs"); [cite: 32, 70]
+        System.out.println("Bogie IDs After Insertion:"); [cite: 71]
+        System.out.println(bogies); [cite: 71]
+        System.out.println("UC3 uniqueness validation completed..."); [cite: 74]
     }
 
     public static void main(String[] args) {
-        System.out.println("\n UC2 Add Passenger Bogies to Train \n"); // [cite: 30, 65]
+        UseCase3TrackUniqueBogieIDs app = new UseCase3TrackUniqueBogieIDs();
 
-        UseCase2TrainConsistMgmt train = new UseCase2TrainConsistMgmt();
+        // Adding IDs including duplicates [cite: 37]
+        app.addBogie("B6101"); [cite: 39]
+        app.addBogie("B6102"); [cite: 40]
+        app.addBogie("B6103"); [cite: 41]
+        app.addBogie("B6104"); [cite: 42]
 
-        // 1. Add bogies: Sleeper, AC Chair, First Class [cite: 55]
-        train.addBogie("Sleeper");
-        train.addBogie("AC Chair");
-        train.addBogie("First Class");
+        // Duplicate entries will be ignored internally [cite: 43]
+        app.addBogie("B6101"); // Duplicate entry [cite: 44]
+        app.addBogie("B6102"); // Duplicate entry [cite: 45]
 
-        // 2. Print the list after insertion [cite: 56]
-        System.out.println("After Adding Bogies:"); // [cite: 66]
-        System.out.println("Passenger Bogies: " + train.getPassengerBogies()); // [cite: 67]
-
-        // 3. Remove one bogie (AC Chair) [cite: 57]
-        train.removeBogie("AC Chair");
-        System.out.println("\nAfter Removing 'AC Chair':"); // [cite: 68]
-        System.out.println("Passenger Bogies: " + train.getPassengerBogies()); // [cite: 69]
-
-        // 4. Use contains() to check if Sleeper exists [cite: 58]
-        System.out.println("\nChecking if 'Sleeper' exists:"); // [cite: 70]
-        System.out.println("Contains Sleeper?: " + train.checkBogieExists("Sleeper")); // [cite: 71]
-
-        // 5. Print final list state [cite: 59]
-        System.out.println("\nFinal Train Passenger Consist:"); // [cite: 72]
-        System.out.println(train.getPassengerBogies()); // [cite: 73]
-        System.out.println("\nUC2 operations completed successfully..."); // [cite: 74]
+        app.displayBogies();
     }
 }
