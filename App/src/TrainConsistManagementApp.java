@@ -1,54 +1,48 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * UC3: Track Unique Bogie IDs
- * This class ensures that duplicate bogie IDs are not added
- * into the train formation using HashSet. [cite: 17, 20]
+ * UC4: Maintain Ordered Bogie Consist
+ * Models the physical chaining of train bogies using LinkedList for ordered operations.
+ * [cite: 24, 27]
  */
-public class UseCase3TrackUniqueBogieIDs {
-
-    private Set<String> bogies;
-
-    public UseCase3TrackUniqueBogieIDs() {
-        // HashSet is used to store only unique values [cite: 34, 53]
-        this.bogies = new HashSet<>();
-    }
-
-    /**
-     * Adds a bogie ID to the set. Duplicates are automatically
-     * ignored by the HashSet implementation. [cite: 43, 57]
-     * @param bogieId The ID to add
-     * @return true if the ID was added, false if it was a duplicate
-     */
-    public boolean addBogie(String bogieId) {
-        return bogies.add(bogieId);
-    }
-
-    public Set<String> getBogies() {
-        return new HashSet<>(bogies);
-    }
-
-    public void displayBogies() {
-        System.out.println("UC3 Track Unique Bogie IDs"); [cite: 32, 70]
-        System.out.println("Bogie IDs After Insertion:"); [cite: 71]
-        System.out.println(bogies); [cite: 71]
-        System.out.println("UC3 uniqueness validation completed..."); [cite: 74]
-    }
+public class UseCase4TrainConsistMgmt {
 
     public static void main(String[] args) {
-        UseCase3TrackUniqueBogieIDs app = new UseCase3TrackUniqueBogieIDs();
+        System.out.println("============================================");
+        System.out.println(" UC4: Maintain Ordered Bogie Consist ");
+        System.out.println("============================================");
 
-        // Adding IDs including duplicates [cite: 37]
-        app.addBogie("B6101"); [cite: 39]
-        app.addBogie("B6102"); [cite: 40]
-        app.addBogie("B6103"); [cite: 41]
-        app.addBogie("B6104"); [cite: 42]
+        // Create a LinkedList to maintain insertion order [cite: 49, 57]
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        // Duplicate entries will be ignored internally [cite: 43]
-        app.addBogie("B6101"); // Duplicate entry [cite: 44]
-        app.addBogie("B6102"); // Duplicate entry [cite: 45]
+        // Add bogies: Engine, Sleeper, AC, Cargo, Guard [cite: 66]
+        trainConsist.add("Engine");
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC");
+        trainConsist.add("Cargo");
+        trainConsist.add("Guard");
 
-        app.displayBogies();
+        System.out.println("Initial Train Consist:");
+        System.out.println(trainConsist); [cite: 77, 78]
+
+        // Insert a Pantry Car at position 2 [cite: 61, 67]
+        trainConsist.add(2, "Pantry Car");
+        System.out.println("\nAfter Inserting 'Pantry Car' at position 2:");
+        System.out.println(trainConsist); [cite: 79, 80]
+
+        // Remove the first and last bogie [cite: 62, 68]
+        trainConsist.removeFirst();
+        trainConsist.removeLast();
+
+        System.out.println("\nAfter Removing First and Last Bogie:");
+        System.out.println(trainConsist); [cite: 81, 82]
+
+        System.out.println("\nUC4 ordered consist operations completed..."); [cite: 83]
+    }
+
+    // Helper method for Unit Testing to return the current consist state
+    public LinkedList<String> getConsist() {
+        return new LinkedList<>(); // Placeholder for testing logic
     }
 }
